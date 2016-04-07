@@ -22,3 +22,7 @@ a {
 .books {
     width:100%;
 }
+.book-cover {
+    width:125px;
+    height:200px;
+}

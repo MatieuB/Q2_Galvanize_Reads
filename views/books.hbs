@@ -1,0 +1,29 @@
+{{#book}}
+<div class="book col-md-offset-3">
+    <div class="image col-md-2">
+        <img class="book-cover"src="{{cover_url}}" alt="" />
+    </div>
+    <div class="info" "col-md-4">
+        <p class='text-right'>
+            <a href="/edit">
+            <button class="btn" name="edit">Edit</button>
+            </a>
+            <a href="/delete">
+             <button class="btn" name="delete">Delete</button>
+            </a>
+        </p>
+        <h2>{{title}}</h2>
+        <h4>By {{first_name}} {{last_name}}</h4>
+        <em><h4>{{genre}}</h4></em>
+        <p>
+        {{description}}
+        </p>
+
+    </div>
+
+</div>
+<br>
+<br>
+<br>
+
+{{/book}}
