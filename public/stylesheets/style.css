@@ -6,3 +6,19 @@ body {
 a {
   color: #00B7FF;
 }
+.logo {
+    width:125px;
+    height:125px;
+}
+.page-header{
+    display: flex;
+}
+.main-entry{
+    display: flex;
+}
+.authors {
+    width:100%;
+}
+.books {
+    width:100%;
+}
