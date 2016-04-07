@@ -2,9 +2,9 @@
 exports.up = function(knex, Promise) {
     return knex.schema.table('books', function(table){
       table.dropColumn('author_id');
-      table.integer('author1_id').references('authors.id');
-      table.integer('author2_id').references('authors.id');
-      table.integer('author3_id').references('authors.id');
+      table.integer('author1_id');
+      table.integer('author2_id');
+      table.integer('author3_id');
   });
 
 

@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('title');
     table.text('description');
     table.string('cover-url');
-    table.integer('author_id').references('authors.id');
+    table.integer('author_id');
   });
 
 };
