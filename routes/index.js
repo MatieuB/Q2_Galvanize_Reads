@@ -18,5 +18,16 @@ router.get('/books', function(req, res, next) {
         book:bookData });
         })
 });
+router.get('/authors', function(req, res, next) {
+    knex('authors_books')
+        .innerJoin('authors','authors_books.author_id','authors.id')
+        .innerJoin('books','authors_books.books_id','books.id')
+        .innerJoin('genres','books.genre_id','genres.id')
+        .then(function(bookData){
+            console.log(bookData);
+            res.render('authors', { title: 'Galvanize Reads',
+        book:bookData });
+        })
+});
 
 module.exports = router;
