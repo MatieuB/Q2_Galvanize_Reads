@@ -2,6 +2,13 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+.create {
+    display:flex;
+    justify-content: flex-start;
+    position: relative;
+    flex-grow: 4;
+    flex-basis: 30%;
+}
 .left-side {
     /*margin-top:2%;*/
     margin-right: 4%;
@@ -9,7 +16,8 @@ body {
     flex-direction: column;
     flex-basis: 15%;
     flex-grow: 1;
-    /*position:fixed;*/
+
+
 }
 #bio {
     height:200px;
@@ -45,6 +53,7 @@ a {
     height:125px;
 }
 .page-header{
+    margin-top: 0px;
     display: flex;
 }
 .main-entry{
@@ -53,6 +62,10 @@ a {
 .authors {
     width:100%;
 }
+.delete {
+    margin-top: 5%;
+    margin-left: 2%;
+}
 .books {
     width:100%;
 }
@@ -60,11 +73,14 @@ a {
     flex-basis:50%;
     flex-grow: 5;
 }
+.description {
+    margin-left: 2%;
+}
 .portraits {
     width:160px;
-    height:210px;
+    height:205px;
     margin-top: 5%;
-    margin-right:2%;
+    margin-right:3%;
 }
 .page-header {
     /*position:fixed;*/

@@ -2,12 +2,12 @@
     <div class="left-side col-md-1">
         <div class="panel panel-default col-md-1">
             <div class="panel-body text-center">
-            <a href="/books">BOOKS</a>
+            <a href="/books/new">NEW BOOK</a>
             </div>
         </div>
         <div class="sid panel panel-default col-md-1">
             <div class="panel-body text-center">
-                <a href="/authors">AUTHORS</a>
+                <a href="/authors/new">NEW AUTHOR</a>
             </div>
         </div>
     </div>
@@ -24,14 +24,14 @@
                         <a href="/books/edit/{{id}}">
                             <button class="btn" name="edit">Edit</button>
                         </a>
-                        <a href="/delete">
+                        <a href="/books/delete/{{id}}">
                             <button class="btn" name="delete">Delete</button>
                         </a>
                     </p>
                     <h2>{{title}}</h2>
                     <h4>By {{first_name}} {{last_name}}</h4>
                     <em><h4>{{genre}}</h4></em>
-                    <p>
+                    <p class="description">
                         {{description}}
                     </p>
 

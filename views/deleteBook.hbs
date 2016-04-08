@@ -1,7 +1,5 @@
-{{#author}}
-    <h1>Are you sure you want to delete
-
-<em>{{first_name}} {{last_name}}</em> and all of their related infomation?
+{{#book}}
+    <h1>Are you sure you want to delete <em>{{title}}</em> and all of the related infomation?
 </h1>
     <div class="container">
 
@@ -20,14 +18,11 @@
     </div>
 
     <div class="book-container">
-
-
-
         <div class="book col-md-offset-2">
             <div class="image col-md-2">
                 <br>
                 <br>
-                <img class="portraits" src="{{portrait_url}}" alt="" />
+                <img class="portraits" src="{{cover_url}}" alt="" />
             </div>
             <div class="info" "col-sm-offset-1 col-md-3">
                 <br>
@@ -42,24 +37,20 @@
              <button class="btn" name="delete">Delete</button>
             </a>
         </p> -->
-                <h2> {{first_name}} {{last_name}}</h2>
+                <h2> {{title}}</h2>
                 <p>
-                    {{bio}}
+                    {{description}}
                 </p>
                 <br>
-                <form class="delete" action="/authors/delete/{{id}}" method="post">
-                    <a href="/authors">
+                <form class="delete" action="/books/delete/{{id}}" method="post">
+                    <a href="/books">
                         <button class="btn btn-defualt" type="button" name="button">NO!!!</button>
                     </a>
                     <input class="btn btn-danger" type="submit" name="name" value="I'm sure">
-
+                </form>
+                </div>
             </div>
-
         </div>
-
-
-
     </div>
-</div>
-</form>
-{{/author}}
+
+{{/book}}
