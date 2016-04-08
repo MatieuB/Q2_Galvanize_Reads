@@ -153,6 +153,16 @@ router.get('/books/delete/:id',function(req,res,next){
         book:bookData });
     });
 });
+
+//delete a book
+// router.post('/authors/delete/:id',function(req,res,next){
+//     knex('books')
+//         .where({id:req.params.id})
+//         .del()
+//         .then(function(){
+//         res.redirect('/books')
+//     });
+// });
 //Delete page for authors
 router.get('/authors/delete/:id',function(req,res,next){
     knex('authors')

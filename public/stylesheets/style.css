@@ -19,6 +19,18 @@ body {
 
 
 }
+.book:hover{
+    transform: scale(1.05);
+    transition: 1s ease;
+}
+.new-book:hover{
+    transform: scale(1.1);
+    transition: 1s ease;
+}
+.new-author:hover {
+    transform: scale(1.1);
+    transition: 1s ease;
+}
 #bio {
     height:200px;
 }
@@ -63,16 +75,19 @@ a {
     width:100%;
 }
 .delete {
-    margin-top: 5%;
+    margin-top: 6%;
     margin-left: 2%;
 }
 .books {
-    width:100%;
+    width:98%;
 }
 .book {
     flex-basis:50%;
-    flex-grow: 5;
+    flex-grow: 4;
+    margin-right: 2%;
 }
+
+
 .description {
     margin-left: 2%;
 }
@@ -81,7 +96,5 @@ a {
     height:205px;
     margin-top: 5%;
     margin-right:3%;
-}
-.page-header {
-    /*position:fixed;*/
+    margin-left: 0px;
 }
