@@ -7,38 +7,53 @@ var knex = require('knex')(require('../knexfile')['development']);
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Galvanize Reads' });
 });
-router.get('/books', function(req, res, next) {
-    knex('first_name','last_name').from('authors')
-        .innerJoin('authors_books','authors_books.author_id','authors.id')
-        .innerJoin('books','authors_books.books_id','books.id')
-        .innerJoin('genres','books.genre_id','genres.id')
-        .then(function(book){
-            console.log(book);
-            res.render('books',{title:'Galvanize Eats',
-        book:book})
-        })
-
-})
-
-//List all books
 // router.get('/books', function(req, res, next) {
 //     var result = {};
-//     knex('books')
-//         // .innerJoin('authors_books','books.id','authors_books.books_id')
-//         // .innerJoin('authors','authors_books.author_id','authors.id')
-//     .then(function(books) {
-//         result.books = books;
-//     }).then(function() {
-//         knex('authors')
-//         .then(function(authors) {
-//         result.authors = authors;
-//         })
-//     }).then(function(){
-//         console.log('======result.books=======',result.books);
-//         console.log('======result=======',result);
-//         res.render('books',{title:'Galvanize Reads',book:result.books,
-//         author:result.authors})
-//     })////start back here!
+//     knex('first_name','last_name','books_id','author_id').from('authors')
+//         .leftJoin('authors_books','authors_books.author_id','authors.id')
+//         // .pluck('authors_books.author_id')
+//         // .whereIn('authors.id','authors_book.author_id')
+//         .innerJoin('books','authors_books.books_id','books.id')
+//         // .then(function(bookId){
+//         //     result.bookId=bookId;
+//         //     console.log('=======result======',result)
+//         //
+//         // }).then(function(){
+//         //     knex('books')
+//             .innerJoin('genres','books.genre_id','genres.id')
+//             .then(function(book){
+//                 console.log('--------book===========',book);
+//                 res.render('books',{title:'Galvanize Reads',
+//                 book:book})
+//             })
+//
+//
+//         // })
+//
+// })
+
+//List all books
+router.get('/books', function(req, res, next) {
+    var result = {};
+    knex('books')
+        // .innerJoin('authors_books','books.id','authors_books.books_id')
+        // .innerJoin('authors','authors_books.author_id','authors.id')
+    .then(function(books) {
+        result.books = books;
+    }).then(function() {
+        knex('authors')
+        .then(function(authors) {
+        result.authors = authors;
+        })
+    }).then(function(){
+        console.log('======result.books=======',result.books);
+        console.log('======result=======',result);
+        res.render('books',{title:'Galvanize Reads',book:result.books,
+        author:result.authors})
+    })
+})
+
+    ////start back here!
         // .innerJoin('books','authors_books.books_id','books.id')
         // // .innerJoin('books','authors_books.books_id','books.id')
         // .whereIn('')

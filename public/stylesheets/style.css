@@ -5,6 +5,10 @@ body {
 #burn{
     height:64vh;
 }
+.sidePanelImage{
+    height:150px;
+    width:150px;
+}
 .create {
     display:flex;
     justify-content: flex-start;
