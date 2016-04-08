@@ -1,0 +1,32 @@
+{{#book}}
+
+
+<h1>Editing {{title}} </h1>
+<fieldset>
+    <form class="col-md-3" action="/edit/{{id}}" method="POST">
+        <div class="form-group">
+          <label for="">Title</label>
+          <input type="text" name="first_name"
+          value="{{title}}" class="form-control">
+        </div>
+        <div class="form-group">
+        <label for="">Author</label>
+        <input type="text" name="last_name"
+          value="{{first_name}} {{last_name}}" class="form-control">
+        </div>
+        <div class="form-group">
+        <label for="">Description</label>
+        <input id="bio" type="textarea" name="bio" value="{{description}}"class="form-control">
+        </div>
+        <div class="form-group">
+        <label for="">Cover URL</label>
+        <input type="text" name="portrait_url" value="{{cover_url}}"class="form-control">
+        </div>
+        <a href="/books">
+        <button type="button" class="btn btn-default">CANCEL</button>
+        </a>
+        <button type="submit" class="btn btn-default">SUBMIT</button>
+    </fieldset>
+    </form>
+
+{{/book}}

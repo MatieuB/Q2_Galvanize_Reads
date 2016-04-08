@@ -1,18 +1,37 @@
-{{#book}}
-<div class="book col-md-offset-3">
-    <div class="image col-md-2">
-        <img class="book-cover"src="{{portrait_url}}" alt="" />
+<div class="container">
+
+</div>
+<div class="left-side col-md-1">
+    <div class="panel panel-default col-md-1">
+        <div class="panel-body text-center">
+        <a href="/books">BOOKS</a>
+        </div>
     </div>
-    <div class="info" "col-md-4">
+    <div class="panel panel-default col-md-1">
+        <div class="panel-body text-center">
+            <a href="/authors">AUTHORS</a>
+        </div>
+    </div>
+</div>
+
+<div class="book-container">
+
+
+{{#book}}
+<div class="book col-md-offset-2">
+    <div class="image col-md-2">
+        <img class="portraits"src="{{portrait_url}}" alt="" />
+    </div>
+    <div class="info" "col-sm-offset-1 col-md-3">
         <p class='text-right'>
-            <a href="/edit">
+            <a href="/authors/edit/{{id}}">
             <button class="btn" name="edit">Edit</button>
             </a>
             <a href="/delete">
              <button class="btn" name="delete">Delete</button>
             </a>
         </p>
-        <h2> {{first_name}} {{last_name}}</h2><br>
+        <h2> {{first_name}} {{last_name}}</h2>
         <p>
         {{bio}}
     </p><br>
@@ -23,5 +42,8 @@
 <br>
 <br>
 <br>
+<br>
 
 {{/book}}
+</div>
+</div>
