@@ -1,0 +1,16 @@
+{{#author}}
+<h1>Are you sure you want to delete
+<img src="{{portrait_url}}" alt="" />
+    {{first_name}} {{last_name}} and all of their related infomation?
+</h1>
+<form class="de" action="/authors/delete/{{id}}" method="post">
+<a href="/authors">
+<button class="btn btn-defualt" type="button" name="button">NO!!!</button>
+</a>
+<input class="btn btn-warning" type="submit" name="name" value="I'm sure">
+
+
+
+
+</form>
+{{/author}}

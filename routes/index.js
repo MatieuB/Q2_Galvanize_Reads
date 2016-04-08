@@ -7,6 +7,8 @@ var knex = require('knex')(require('../knexfile')['development']);
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Galvanize Reads' });
 });
+
+//List all books
 router.get('/books', function(req, res, next) {
     knex('books')
         // .innerJoin('authors','authors_books.author_id','authors.id')
@@ -20,6 +22,8 @@ router.get('/books', function(req, res, next) {
         book:bookData });
         })
 });
+
+//List all Authors
 router.get('/authors', function(req, res, next) {
     knex('authors')
         .then(function(bookData){
@@ -28,6 +32,8 @@ router.get('/authors', function(req, res, next) {
         book:bookData });
         })
 });
+
+//Edit Author info
 router.get('/authors/edit/:id', function(req, res, next) {
     knex('authors')
         .where({id:req.params.id})
@@ -38,11 +44,13 @@ router.get('/authors/edit/:id', function(req, res, next) {
         author:authorData });
         })
 });
+
+//Edit book info...not wired right
 router.get('/books/edit/:id', function(req, res, next) {
     knex('books')
         .where({id:req.params.id})
-        .innerJoin('authors_books','books.id','authors_books.books_id')
-        .innerJoin('authors','authors_books.author_id','authors.id')
+        // .innerJoin('authors_books','books.id','authors_books.books_id')
+        // .innerJoin('authors','authors_books.author_id','authors.id')
 
         .then(function(bookData){
             console.log(bookData);
@@ -50,6 +58,8 @@ router.get('/books/edit/:id', function(req, res, next) {
         book:bookData });
         })
 });
+
+//submit changes to author edit
 router.post('/authors/edit/:id', function(req, res, next) {
     knex('authors')
         .where({id:req.params.id})
@@ -59,6 +69,28 @@ router.post('/authors/edit/:id', function(req, res, next) {
 
         })
 });
+
+//Delete page for authors
+router.get('/authors/delete/:id',function(req,res,next){
+    knex('authors')
+        .where({id:req.params.id})
+
+        .then(function(authorData){
+            console.log(authorData);
+            res.render('deleteAuthor', { title:'Galvanize Reads',
+        author:authorData });
+
+    });
+});
+//Delete An Author!
+// router.post('/authors/delete/:id',function(req,res,next){
+//     knex('authors')
+//         .where({id:req.params.id})
+//         .del()
+//         .then(function(){
+//         res.redirect('/authors')
+//     });
+// });
 
 
 module.exports = router;

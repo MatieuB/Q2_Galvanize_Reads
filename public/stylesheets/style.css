@@ -66,4 +66,6 @@ a {
     margin-top: 5%;
     margin-right:2%;
 }
-\
+.page-header {
+    /*position:fixed;*/
+}
