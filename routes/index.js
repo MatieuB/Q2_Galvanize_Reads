@@ -45,7 +45,7 @@ router.get('/authors/new', function(req, res, next) {
 //post new author to DB
 router.post('/authors/new', function(req, res, next) {
     knex('authors')
-.insert({
+    .insert({
         // req.body
         // id:'default',
         first_name:req.body.first_name,
@@ -62,9 +62,14 @@ router.get('/books/new', function(req, res, next) {
     res.render('newBook',{title:'Galvanize Reads'})
 })
 //post new author to DB
-router.post('/authors/new', function(req, res, next) {
+router.post('/books/new', function(req, res, next) {
     knex('books')
-        .insert(req.body)
+        .insert({
+            // id:'defualt',
+            title: req.body.title,
+            description: req.body.description,
+            cover_url: req.body.cover_url
+        })
         .then(function(){
             res.redirect('/books')
         })
@@ -155,7 +160,7 @@ router.get('/books/delete/:id',function(req,res,next){
 });
 
 //delete a book
-// router.post('/authors/delete/:id',function(req,res,next){
+// router.post('/books/delete/:id',function(req,res,next){
 //     knex('books')
 //         .where({id:req.params.id})
 //         .del()
@@ -176,14 +181,14 @@ router.get('/authors/delete/:id',function(req,res,next){
     });
 });
 //Delete An Author!
-// router.post('/authors/delete/:id',function(req,res,next){
-//     knex('authors')
-//         .where({id:req.params.id})
-//         .del()
-//         .then(function(){
-//         res.redirect('/authors')
-//     });
-// });
+router.post('/authors/delete/:id',function(req,res,next){
+    knex('authors')
+        .where({id:req.params.id})
+        .del()
+        .then(function(){
+        res.redirect('/authors')
+    });
+});
 
 
 module.exports = router;
