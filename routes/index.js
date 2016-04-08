@@ -12,98 +12,42 @@ router.get('/', function(req, res, next) {
 router.get('/books', function(req, res, next) {
     var result = [];
     knex('books')
-        .orderBy('title')
         .then(function(data) {
             for (var i = 0; i < data.length; i++) {
                 result.push({
-                    id: books[i].title,
-                    description: books[i].description,
-                    cover_url: books[i].cover_url,
-                    genre_id: books[i].genre_id,
+                    id: data[i].id,
+                    title:data[i].title,
+                    description: data[i].description,
+                    cover_url: data[i].cover_url,
+                    genre_id: data[i].genre_id,
                     authors: []
                 })
             }
         })
+        // console.log('===========result=========',result);
+
     return knex('books')
         .innerJoin('authors_books', 'books.id', 'authors_books.book_id')
         .innerJoin('authors', 'authors_books.author_id', 'authors.id')
         .select('authors_books.book_id', 'authors.first_name', 'authors.last_name')
         .then(function(data) {
             for (var i = 0; i < result.length; i++) {
-                for (var j = 0; j < books.length; j++) {
+                for (var j = 0; j < data.length; j++) {
+
+                    console.log('-----datastringlogn--------',data[j].first_name);
                     if (result[i].id == data[j].book_id) {
                         result[i].authors.push(data[j].first_name + ' ' + data[j].last_name)
                     }
                 }
             }
             res.render('books', {
-                result: books,
-                authors: books
+                book: result,
+                authors: result
             })
         })
-
-
 });
 
-//knex('first_name', 'last_name', 'book_id', 'author_id').from('authors')
-    //.innerJoin('authors_books', 'authors.id', 'authors_books.author_id')
-    // .pluck('authors_books.author_id')
-    // .whereIn('authors.id','authors_books.author_id')
 
-//.innerJoin('books', 'authors_books.book_id', 'books.id')
-    // .then(function(bookId){
-    //     result.bookId=bookId;
-    //     console.log('=======result======',result)
-    //
-    // }).then(function(){
-    //     knex('books')
-    // .innerJoin('genres', 'books.genre_id', 'genres.id')
-    // .then(function(book) {
-    //     console.log('--------book===========', book);
-    //     res.render('books', {
-    //         title: 'Galvanize Reads',
-    //         book: book
-    //     })
-    // })
-
-
-// })
-
-//})
-
-//List all books
-// router.get('/books', function(req, res, next) {
-//     var result = {};
-//     knex('books')
-//         // .innerJoin('authors_books','books.id','authors_books.book_id')
-//         // .innerJoin('authors','authors_books.author_id','authors.id')
-//     .then(function(books) {
-//         result.books = books;
-//     }).then(function() {
-//         knex('authors')
-//         .then(function(authors) {
-//         result.authors = authors;
-//         })
-//     }).then(function(){
-//         console.log('======result.books=======',result.books);
-//         console.log('======result=======',result);
-//         res.render('books',{title:'Galvanize Reads',book:result.books,
-//         author:result.authors})
-//     })
-// })
-
-////start back here!
-// .innerJoin('books','authors_books.book_id','books.id')
-// // .innerJoin('books','authors_books.book_id','books.id')
-// .whereIn('')
-// .innerJoin('authors','authors_books.author_id','authors.id')
-// .innerJoin('genres','books.genre_id','genres.id')
-// .then(function(bookData){
-//     console.log('======booksssData======',bookData);
-//     res.render('books', { title:'Galvanize Reads',
-// book:bookData });
-// })
-//});
 //create new author
 router.get('/authors/new', function(req, res, next) {
         res.render('newAuthor', {
@@ -114,8 +58,6 @@ router.get('/authors/new', function(req, res, next) {
 router.post('/authors/new', function(req, res, next) {
         knex('authors')
             .insert({
-                // req.body
-                // id:'default',
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 bio: req.body.bio,
