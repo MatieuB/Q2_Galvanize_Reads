@@ -7,26 +7,38 @@ var knex = require('knex')(require('../knexfile')['development']);
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Galvanize Reads' });
 });
+router.get('/books', function(req, res, next) {
+    knex('first_name','last_name').from('authors')
+        .innerJoin('authors_books','authors_books.author_id','authors.id')
+        .innerJoin('books','authors_books.books_id','books.id')
+        .innerJoin('genres','books.genre_id','genres.id')
+        .then(function(book){
+            console.log(book);
+            res.render('books',{title:'Galvanize Eats',
+        book:book})
+        })
+
+})
 
 //List all books
-router.get('/books', function(req, res, next) {
-    var result = {};
-    knex('books')
-        // .innerJoin('authors_books','books.id','authors_books.books_id')
-        // .innerJoin('authors','authors_books.author_id','authors.id')
-    .then(function(books) {
-        result.books = books;
-    }).then(function() {
-        knex('authors')
-        .then(function(authors) {
-        result.authors = authors;
-        })
-    }).then(function(){
-        console.log('======result.books=======',result.books);
-        console.log('======result=======',result);
-        res.render('books',{title:'Galvanize Reads',book:result.books,
-        author:result.authors})
-    })
+// router.get('/books', function(req, res, next) {
+//     var result = {};
+//     knex('books')
+//         // .innerJoin('authors_books','books.id','authors_books.books_id')
+//         // .innerJoin('authors','authors_books.author_id','authors.id')
+//     .then(function(books) {
+//         result.books = books;
+//     }).then(function() {
+//         knex('authors')
+//         .then(function(authors) {
+//         result.authors = authors;
+//         })
+//     }).then(function(){
+//         console.log('======result.books=======',result.books);
+//         console.log('======result=======',result);
+//         res.render('books',{title:'Galvanize Reads',book:result.books,
+//         author:result.authors})
+//     })////start back here!
         // .innerJoin('books','authors_books.books_id','books.id')
         // // .innerJoin('books','authors_books.books_id','books.id')
         // .whereIn('')
@@ -37,7 +49,7 @@ router.get('/books', function(req, res, next) {
         //     res.render('books', { title:'Galvanize Reads',
         // book:bookData });
         // })
-});
+//});
 //create new author
 router.get('/authors/new', function(req, res, next) {
     res.render('newAuthor',{title:'Galvanize Reads'})
