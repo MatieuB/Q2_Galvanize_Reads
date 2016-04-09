@@ -226,6 +226,7 @@ router.post('/authors/edit/:id', function(req, res, next) {
         bio:req.body.bio,
         portrait_url:req.body.portrait_url
         })
+        
         .then(function(data) {
             console.log('---data----',data);
             knex('books')
