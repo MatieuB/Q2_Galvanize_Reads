@@ -226,7 +226,7 @@ router.post('/authors/edit/:id', function(req, res, next) {
         bio:req.body.bio,
         portrait_url:req.body.portrait_url
         })
-        
+
         .then(function(data) {
             console.log('---data----',data);
             knex('books')
@@ -293,6 +293,16 @@ router.post('/authors/delete/:id', function(req, res, next) {
         .del()
         .then(function() {
             res.redirect('/authors')
+        });
+});
+router.post('/books/edit/:id', function(req, res, next) {
+    knex('books')
+        .where({
+            id: req.params.id
+        })
+        .update()
+        .then(function() {
+            res.redirect('/books')
         });
 });
 
