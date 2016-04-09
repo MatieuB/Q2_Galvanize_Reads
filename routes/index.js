@@ -16,7 +16,7 @@ router.get('/books', function(req, res, next) {
             for (var i = 0; i < data.length; i++) {
                 result.push({
                     id: data[i].id,
-                    title:data[i].title,
+                    title: data[i].title,
                     description: data[i].description,
                     cover_url: data[i].cover_url,
                     genre_id: data[i].genre_id,
@@ -32,19 +32,19 @@ router.get('/books', function(req, res, next) {
             for (var i = 0; i < result.length; i++) {
                 for (var j = 0; j < data.length; j++) {
 
-                    console.log('-----datastringlogn--------',data[j].first_name);
+                    console.log('-----datastringlogn--------', data[j].first_name);
                     if (result[i].id == data[j].book_id) {
                         result[i].authors.push(data[j].first_name + ' ' + data[j].last_name)
                     }
                 }
             }
             res.render('books', {
-                title:'Galvanize Reads',
+                title: 'Galvanize Reads',
                 book: result,
                 authors: result
             })
         })
-    });
+});
 
 
 //create new author
@@ -110,35 +110,40 @@ router.get('/authors/edit/:id', function(req, res, next) {
             for (var i = 0; i < data.length; i++) {
                 result.push({
                     id: data[i].id,
-                    first_name:data[i].first_name,
-                    last_name:data[i].last_name,
+                    first_name: data[i].first_name,
+                    last_name: data[i].last_name,
                     bio: data[i].bio,
                     portrait_url: data[i].portrait_url,
                     books: []
                 })
             }
-        })
-    return knex('authors')
-        .innerJoin('authors_books', 'authors.id', 'authors_books.author_id')
-        .innerJoin('books', 'authors_books.book_id', 'books.id')
-        .select('authors_books.author_id', 'books.title')
-        .then(function(data) {
-            // console.log('-----data=-------',data);
-            for (var i = 0; i < result.length; i++) {
-                for (var j = 0; j < data.length; j++) {
-                    if (result[i].id == data[j].author_id) {
-                        result[i].books.push(data[j].title)
+        }).then(function() {
+
+            knex('authors')
+                .innerJoin('authors_books', 'authors.id', 'authors_books.author_id')
+                .innerJoin('books', 'authors_books.book_id', 'books.id')
+                .select('authors_books.author_id', 'books.title')
+                .then(function(data) {
+                    for (var i = 0; i < result.length; i++) {
+                        for (var j = 0; j < data.length; j++) {
+                            if (result[i].id == data[j].author_id) {
+                                result[i].books.push(data[j].title)
+                            }
+                        }
                     }
-                }
-            }
-            console.log('-----result-------',result);
-            res.render('editAuthor', {
-                title:'Galvanize Reads',
-                author: result,
-                books: result
-            })
+
+
+                    res.render('editAuthor', {
+                        title: 'Galvanize Reads',
+                        author: result,
+                        books: result
+
+
+                    })
+
+                })
         })
-    });
+});
 
 
 // router.get('/authors/edit/:id', function(req, res, next) {
@@ -167,7 +172,7 @@ router.get('/books/edit/:id', function(req, res, next) {
             for (var i = 0; i < data.length; i++) {
                 result.push({
                     id: data[i].id,
-                    title:data[i].title,
+                    title: data[i].title,
                     description: data[i].description,
                     cover_url: data[i].cover_url,
                     genre_id: data[i].genre_id,
@@ -188,12 +193,12 @@ router.get('/books/edit/:id', function(req, res, next) {
                 }
             }
             res.render('editBook', {
-                title:'Galvanize Reads',
+                title: 'Galvanize Reads',
                 book: result,
                 authors: result
             })
         })
-    });
+});
 
 //submit changes to book book book edit
 router.post('/books/edit/:id', function(req, res, next) {
@@ -201,7 +206,8 @@ router.post('/books/edit/:id', function(req, res, next) {
         .where({
             id: req.params.id
         })
-        .update(req.body)
+
+    .update(req.body)
         .then(function() {
             res.redirect('/books')
 
@@ -212,14 +218,28 @@ router.post('/books/edit/:id', function(req, res, next) {
 router.post('/authors/edit/:id', function(req, res, next) {
     knex('authors')
         .where({
-            id: req.params.id
+            'authors.id': req.params.id
         })
-        .update(req.body)
-        .then(function() {
-            res.redirect('/authors')
+        .update({
+        first_name:req.body.first_name,
+        last_name:req.body.last_name,
+        bio:req.body.bio,
+        portrait_url:req.body.portrait_url
+        })
+        .then(function(data) {
+            console.log('---data----',data);
+            knex('books')
+            .where({title:req.body.title})
+                .innerJoin('authors_books','books.id','authors_books.book_id')
+                .innerJoin('books','authors_books_book.id','books.id')
+                .update({
+                    title:req.body.title})
+                .then(function() {
+                res.redirect('/authors')
 
-        })
-});
+            })
+        });
+})
 
 //Delete page for books
 router.get('/books/delete/:id', function(req, res, next) {
@@ -237,14 +257,16 @@ router.get('/books/delete/:id', function(req, res, next) {
 });
 
 //delete a book
-// router.post('/books/delete/:id',function(req,res,next){
-//     knex('books')
-//         .where({id:req.params.id})
-//         .del()
-//         .then(function(){
-//         res.redirect('/books')
-//     });
-// });
+router.post('/books/delete/:id', function(req, res, next) {
+    knex('books')
+        .where({
+            id: req.params.id
+        })
+        .del()
+        .then(function() {
+            res.redirect('/books')
+        });
+});
 //Delete page for authors
 router.get('/authors/delete/:id', function(req, res, next) {
     knex('authors')

@@ -1,7 +1,7 @@
 {{#author}}
 
 
-<h1>Editing {{first_name}} {{last_name}}</h1>
+<h1>Editing <em>{{first_name}} {{last_name}}</em></h1>
 <fieldset>
     <form class="col-md-3" action="/authors/edit/{{id}}" method="POST">
         <div class="form-group">
@@ -24,17 +24,20 @@
         </div>
         <div class="form-group">
         <label for="">Books</label>
-        <select class="" name="">
-            {{#books}}
-        <option name="{{title}}">{{this}}</option>
+
+        {{#books}}
+        <input class="form-control col-md-3" type="text" name="title" value="{{this}}">
         {{/books}}
-        </select>
         </div>
+
+
+
         <a href="/authors">
         <button type="button" class="btn btn-default">CANCEL</button>
         </a>
         <button type="submit" class="btn btn-default">SUBMIT</button>
     </fieldset>
     </form>
+
 
 {{/author}}
