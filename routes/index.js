@@ -1,14 +1,46 @@
 var express = require('express');
 var router = express.Router();
 var knex = require('knex')(require('../knexfile')['development']);
+var bookshelf = require('bookshelf')(knex);
+
+
+
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', {
-        title: 'Galvanize Reads'
-    });
-});
+router.get('/',function(req,res,next){
+    res.render('index')
+})
+// effing with Bookshelf.js
+// router.get('/', function(req, res, next) {
+//     var User = bookshelf.Model.extend({
+//         tableName: 'authors',
+//         post_id: function() {
+//             return this.hasMany(Posts);
+//         }
+//     });
+//     var Posts = bookshelf.Model.extend({
+//         tableName: 'authors_books',
+//         tag: function() {
+//             return this.belongsToMany(Tag);
+//         }
+//     });
+//     var Tag = bookshelf.Model.extend({
+//         tableName: 'books'
+//     });
+//
+//     User.where('id', 4).fetch({
+//         withRelated: ['posts_id.tag']
+//     }).then(function(user) {
+//
+//         console.log(user.related('posts').toJSON())
+//         res.render('index', {
+//             title: 'Galvanize Reads'
+//         });
+//     })
+// });
+
+
 router.get('/books', function(req, res, next) {
     var result = [];
     knex('books')
@@ -53,7 +85,7 @@ router.get('/authors/new', function(req, res, next) {
             title: 'Galvanize Reads'
         })
     })
-    //post new author to DB
+//post new author to DB
 router.post('/authors/new', function(req, res, next) {
         knex('authors')
             .insert({
@@ -67,13 +99,13 @@ router.post('/authors/new', function(req, res, next) {
                 res.redirect('/authors')
             })
     })
-    //create new book
+//create new book
 router.get('/books/new', function(req, res, next) {
         res.render('newBook', {
             title: 'Galvanize Reads'
         })
     })
-    //post new author to DB
+//post new author to DB
 router.post('/books/new', function(req, res, next) {
     knex('books')
         .insert({
@@ -221,25 +253,28 @@ router.post('/authors/edit/:id', function(req, res, next) {
             'authors.id': req.params.id
         })
         .update({
-        first_name:req.body.first_name,
-        last_name:req.body.last_name,
-        bio:req.body.bio,
-        portrait_url:req.body.portrait_url
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            bio: req.body.bio,
+            portrait_url: req.body.portrait_url
         })
 
-        .then(function(data) {
-            console.log('---data----',data);
-            knex('books')
-            .where({title:req.body.title})
-                .innerJoin('authors_books','books.id','authors_books.book_id')
-                .innerJoin('books','authors_books_book.id','books.id')
-                .update({
-                    title:req.body.title})
-                .then(function() {
+    .then(function(data) {
+        console.log('---data----', data);
+        knex('books')
+            .where({
+                title: req.body.title
+            })
+            .innerJoin('authors_books', 'books.id', 'authors_books.book_id')
+            .innerJoin('books', 'authors_books_book.id', 'books.id')
+            .update({
+                title: req.body.title
+            })
+            .then(function() {
                 res.redirect('/authors')
 
             })
-        });
+    });
 })
 
 //Delete page for books
